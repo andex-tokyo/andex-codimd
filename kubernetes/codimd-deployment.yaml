@@ -74,7 +74,7 @@ spec:
             - name: CMD_EMAIL
               value: "true"
             - name: CMD_ALLOW_EMAIL_REGISTER
-              value: "true"
+              value: "false"
 
             # 画像アップロード設定（Cloudflare R2）
             - name: CMD_IMAGE_UPLOAD_TYPE
