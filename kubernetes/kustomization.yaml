@@ -4,3 +4,4 @@ resources:
   - codimd-postgresql.yaml
   - codimd-deployment.yaml
   - codimd-service.yaml
+  - codimd-s3-secrets-sealed.yaml

@@ -40,7 +40,7 @@ spec:
             - name: CMD_PROTOCOL_USESSL
               value: "false"
 
-            # アクセス制御設定（ログイン必須）
+            # アクセス制御設定
             - name: CMD_ALLOW_ANONYMOUS
               value: "false"
             - name: CMD_ALLOW_ANONYMOUS_EDITS
@@ -49,8 +49,6 @@ spec:
               value: "true"
             - name: CMD_REQUIRE_FREEURL_AUTHENTICATION
               value: "true"
-
-            # 権限管理機能
             - name: CMD_DEFAULT_PERMISSION
               value: "editable"
 
@@ -60,13 +58,33 @@ spec:
             - name: CMD_ALLOW_EMAIL_REGISTER
               value: "true"
 
+            # 画像アップロード設定（Cloudflare R2）
+            - name: CMD_IMAGE_UPLOAD_TYPE
+              value: "s3"
+            - name: CMD_S3_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: codimd-s3-secrets
+                  key: access-key
+            - name: CMD_S3_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: codimd-s3-secrets
+                  key: secret-key
+            - name: CMD_S3_REGION
+              value: "auto"
+            - name: CMD_S3_BUCKET
+              value: "andex-codimd"
+            - name: CMD_S3_ENDPOINT
+              value: "https://5d9c68bca6f685d588240bfb6bc7ec79.r2.cloudflarestorage.com"
+            - name: CMD_S3_FORCE_PATH_STYLE
+              value: "true"
+
             # その他設定
             - name: CMD_ALLOW_PDF_EXPORT
               value: "true"
             - name: CMD_ALLOW_GRAVATAR
               value: "true"
-            - name: CMD_IMAGE_UPLOAD_TYPE
-              value: "filesystem"
 
           ports:
             - containerPort: 3000
