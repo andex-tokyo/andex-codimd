@@ -95,8 +95,10 @@ spec:
               value: "auto"
             - name: CMD_S3_BUCKET
               value: "andex-codimd"
-            - name: CMD_S3_ENDPOINT
+            - name: CMD_S3_BASEURL
               value: "https://md-file.andex.tokyo"
+            - name: CMD_S3_ENDPOINT
+              value: "https://5d9c68bca6f685d588240bfb6bc7ec79.r2.cloudflarestorage.com"
             - name: CMD_S3_FORCE_PATH_STYLE
               value: "true"
 
