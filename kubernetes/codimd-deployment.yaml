@@ -55,6 +55,8 @@ spec:
               value: "md.andex.tokyo"
             - name: CMD_URL_ADDPORT
               value: "false"
+            - name: CMD_PROTOCOL_USESSL
+              value: "true"
 
             # アクセス制御設定
             - name: CMD_ALLOW_ANONYMOUS
