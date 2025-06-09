@@ -20,7 +20,7 @@ spec:
           env:
             # データベース設定
             - name: CMD_DB_URL
-              value: "postgres://codimd:$(CMD_DB_PASSWORD)@postgresql.codimd.svc.cluster.local:5432/codimd"
+              value: "postgres://codimd:$(CMD_DB_PASSWORD)@postgresql:5432/codimd"
             - name: CMD_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
