@@ -96,9 +96,7 @@ spec:
             - name: CMD_S3_BUCKET
               value: "andex-codimd"
             - name: CMD_S3_ENDPOINT
-              value: "https://md-file.andex.tokyo"
-            - name: CMD_S3_FORCE_PATH_STYLE
-              value: "false"
+              value: "https://5d9c68bca6f685d588240bfb6bc7ec79.r2.cloudflarestorage.com/"
 
             # その他設定
             - name: CMD_ALLOW_PDF_EXPORT
