@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: postgresql
-          image: postgres:17
+          image: postgres:15
           env:
             - name: POSTGRES_DB
               value: codimd
