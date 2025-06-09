@@ -57,6 +57,8 @@ spec:
               value: "false"
             - name: CMD_PROTOCOL_USESSL
               value: "true"
+            - name: CMD_ALLOW_ORIGIN
+              value: "md.andex.tokyo,localhost"
 
             # アクセス制御設定
             - name: CMD_ALLOW_ANONYMOUS
