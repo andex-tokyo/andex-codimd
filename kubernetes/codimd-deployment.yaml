@@ -16,9 +16,9 @@ spec:
     spec:
       containers:
         - name: codimd
-          # CodiMD version: 2.5.4
           image: hackmdio/hackmd:2.5.4
           env:
+            # データベース設定
             - name: CMD_DB_URL
               value: "postgres://codimd:$(CMD_DB_PASSWORD)@postgresql:5432/codimd"
             - name: CMD_DB_PASSWORD
@@ -31,16 +31,43 @@ spec:
                 secretKeyRef:
                   name: codimd-app-secrets
                   key: session-secret
+
+            # 基本設定
             - name: CMD_DOMAIN
               value: "codimd.local"
             - name: CMD_URL_ADDPORT
               value: "false"
             - name: CMD_PROTOCOL_USESSL
               value: "false"
+
+            # アクセス制御設定（ログイン必須）
             - name: CMD_ALLOW_ANONYMOUS
-              value: "true"
+              value: "false"
             - name: CMD_ALLOW_ANONYMOUS_EDITS
+              value: "false"
+            - name: CMD_ALLOW_FREEURL
               value: "true"
+            - name: CMD_REQUIRE_FREEURL_AUTHENTICATION
+              value: "true"
+
+            # 権限管理機能
+            - name: CMD_DEFAULT_PERMISSION
+              value: "editable"
+
+            # 認証設定
+            - name: CMD_EMAIL
+              value: "true"
+            - name: CMD_ALLOW_EMAIL_REGISTER
+              value: "true"
+
+            # その他設定
+            - name: CMD_ALLOW_PDF_EXPORT
+              value: "true"
+            - name: CMD_ALLOW_GRAVATAR
+              value: "true"
+            - name: CMD_IMAGE_UPLOAD_TYPE
+              value: "filesystem"
+
           ports:
             - containerPort: 3000
           volumeMounts:
@@ -62,15 +89,3 @@ spec:
         - name: codimd-data
           persistentVolumeClaim:
             claimName: codimd-pvc
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: codimd-pvc
-  namespace: codimd
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 2Gi
