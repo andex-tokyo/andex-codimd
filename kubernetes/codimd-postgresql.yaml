@@ -27,16 +27,31 @@ spec:
                 secretKeyRef:
                   name: codimd-db-secrets
                   key: password
-            - name: POSTGRES_ROOT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: codimd-db-secrets
-                  key: postgres-password
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
           ports:
             - containerPort: 5432
           volumeMounts:
             - name: postgresql-data
               mountPath: /var/lib/postgresql/data
+          readinessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - exec pg_isready -U codimd -d codimd -h 127.0.0.1 -p 5432
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - exec pg_isready -U codimd -d codimd -h 127.0.0.1 -p 5432
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 5
       volumes:
         - name: postgresql-data
           persistentVolumeClaim:
