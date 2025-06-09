@@ -103,6 +103,10 @@ spec:
               value: "true"
             - name: CMD_ALLOW_GRAVATAR
               value: "true"
+            - name: DEBUG
+              value: "true"
+            - name: NODE_ENV
+              value: "development"
 
           ports:
             - containerPort: 3000
