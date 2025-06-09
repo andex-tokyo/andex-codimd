@@ -1,0 +1,15 @@
+{
+  "extends": ["config:recommended"],
+  "regexManagers": [
+    {
+      "fileMatch": ["kubernetes/codimd-app.yaml"],
+      "matchStrings": [
+        "image:\\s+tag:\\s+\"?(?<currentValue>[^\"\\n]+)\"?"
+      ],
+      "datasourceTemplate": "docker",
+      "depNameTemplate": "hackmdio/hackmd",
+      "versioningTemplate": "semver"
+    }
+  ],
+  "assignees": ["andex-tokyo"]
+}

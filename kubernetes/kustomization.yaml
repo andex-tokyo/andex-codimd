@@ -1,0 +1,6 @@
+# kubernetes/kustomization.yaml
+resources:
+  - codimd-secrets-sealed.yaml
+  - codimd-postgresql.yaml
+  - codimd-deployment.yaml
+  - codimd-service.yaml

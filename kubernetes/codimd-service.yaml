@@ -1,0 +1,14 @@
+# kubernetes/codimd-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: codimd
+  namespace: codimd
+spec:
+  type: NodePort
+  selector:
+    app: codimd
+  ports:
+    - port: 3000
+      targetPort: 3000
+      nodePort: 32321

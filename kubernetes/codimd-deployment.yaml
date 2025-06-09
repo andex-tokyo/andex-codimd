@@ -1,0 +1,76 @@
+# kubernetes/codimd-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: codimd
+  namespace: codimd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: codimd
+  template:
+    metadata:
+      labels:
+        app: codimd
+    spec:
+      containers:
+        - name: codimd
+          # CodiMD version: 2.5.4
+          image: hackmdio/hackmd:2.5.4
+          env:
+            - name: CMD_DB_URL
+              value: "postgres://codimd:$(CMD_DB_PASSWORD)@postgresql:5432/codimd"
+            - name: CMD_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: codimd-db-secrets
+                  key: password
+            - name: CMD_SESSION_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: codimd-app-secrets
+                  key: session-secret
+            - name: CMD_DOMAIN
+              value: "codimd.local"
+            - name: CMD_URL_ADDPORT
+              value: "false"
+            - name: CMD_PROTOCOL_USESSL
+              value: "false"
+            - name: CMD_ALLOW_ANONYMOUS
+              value: "true"
+            - name: CMD_ALLOW_ANONYMOUS_EDITS
+              value: "true"
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - name: codimd-data
+              mountPath: /home/hackmd/app/public/uploads
+          readinessProbe:
+            httpGet:
+              path: /status
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /status
+              port: 3000
+            initialDelaySeconds: 60
+            periodSeconds: 10
+      volumes:
+        - name: codimd-data
+          persistentVolumeClaim:
+            claimName: codimd-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: codimd-pvc
+  namespace: codimd
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
